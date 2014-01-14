@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="jumbo">
+    <h2>{{ pname }}</h2>
+    <h3>Description</h3>
+    <p>{{ desc }} </p>
+    <h3>Members</h3>
+    <ul>
+	{% for member in members %}
+        <li>{{ member.name }}</li>
+	{% endfor %}
+    </ul> 
+  </div>
+{% endblock %}

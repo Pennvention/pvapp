@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+ 
+{% block content %}
+  <h2>Add New Member</h2>
+ 
+  {% for message in form.name.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  {% for message in form.email.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% for message in form.password.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+
+  {% for message in form.pwdcheck.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+   
+  <form action="{{ url_for('addmember') }}" method=post>
+    {{ form.hidden_tag() }}
+     
+    {{ form.name.label }}
+    {{ form.name }}
+     
+    {{ form.email.label }}
+    {{ form.email}}
+
+    {{ form.password.label }}
+    {{ form.password }}
+     
+    {{ form.pwdcheck.label }}
+    {{ form.pwdcheck }}
+     
+    {{ form.submit }}
+  </form>
+     
+{% endblock %}

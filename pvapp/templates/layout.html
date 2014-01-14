@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pennvention</title>    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+   
+    <header>
+      <div class="container">
+        <h1 class="logo">Pennvention</h1>
+        <strong><nav>
+          <ul class="menu">
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            {% if 'project' in session %}
+ 	    <li><a href="{{ url_for('addmember') }}">Add Member</a></li>
+            <li><a href="{{ url_for('profile') }}">Profile</a></li>
+            <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
+            {% else %}
+	    <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+            {% endif %}
+          </ul>
+        </nav></strong>
+      </div>
+    </header>
+     
+    <div class="container">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class=flashes>
+          {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      {% block content %}
+      {% endblock %}
+    </div>
+     
+  </body>
+</html>

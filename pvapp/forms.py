@@ -1,7 +1,12 @@
 from flask.ext.wtf import Form
 from flask.ext.wtf.html5 import EmailField
+from flask.ext.wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import validators, ValidationError, TextField, TextAreaField, SubmitField, PasswordField
 from models import Member, db
+
+class PhaseOneForm(Form):
+  presentation = FileField('Presentation in PDF Format', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
+  submit = SubmitField("Send")
 
 class CreateProjectForm(Form):
   projectname = TextField("Project Name", [validators.Required("Please enter a name for your project.")])

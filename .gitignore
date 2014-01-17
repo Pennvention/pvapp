@@ -2,3 +2,5 @@
 *.pyc
 #ignore settings.py
 pvapp/settings.py
+#ignore uploads
+uploads/

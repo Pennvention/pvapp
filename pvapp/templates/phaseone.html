@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+ 
+{% block content %}
+  <h2>Register Your Team</h2>
+  {% for message in form.presentation.errors %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  <form action="/phaseone/" method="POST" enctype="multipart/form-data">
+    {{ form.presentation.label }}
+    {{ form.presentation }}
+    {{ form.csrf_token }}
+    {{ form.submit}}
+  </form>
+{% endblock %}

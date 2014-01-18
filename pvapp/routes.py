@@ -91,7 +91,8 @@ def signin():
 def profile():
   p = Project.query.get(session['project'])
   members = p.members.all()
-  return render_template('profile.html', pname = p.projectname, desc = p.description, members=members)
+  print p.phaseone
+  return render_template('profile.html', phaseone = p.phaseone, pname = p.projectname, desc = p.description, members=members)
 
 @app.route('/phaseone/', methods=('GET', 'POST'))
 @login_required
@@ -102,11 +103,12 @@ def phaseone():
     form.presentation.data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     p = Project.query.get(session['project'])
     p.submitphaseone(filename) 
+    db.session.commit()
     return redirect(url_for('uploads', filename=filename))
   filename = None
   return render_template('phaseone.html', form=form, filename=filename) 
 
-@app.route('/uploads/<filename>')
+@app.route('/static/<filename>')
 @login_required
 def uploads(filename):
     return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename)

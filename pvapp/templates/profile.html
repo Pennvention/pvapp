@@ -10,5 +10,9 @@
         <li>{{ member.name }}</li>
 	{% endfor %}
     </ul> 
+    {% if phaseone %}
+    <h3>Uploads</h3>
+    <p><a href="{{ url_for('uploads', filename=phaseone)}}">{{ phaseone }}</a></p>
+    {% endif %}
   </div>
 {% endblock %}

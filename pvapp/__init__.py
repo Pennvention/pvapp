@@ -21,3 +21,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 from routes import mail
 from models import db
 mail.init_app(app)
+db.init_app(app)
+
+#INitialize Flask-Admin
+from admin import MyHomeView
+from flask.ext.admin import Admin 
+from flask.ext.admin.contrib.sqla import ModelView
+from models import Member, Project
+admin = Admin(app, index_view=MyHomeView(), name="Pennvention Admin")
+admin.add_view(ModelView(Member, db.session))
+admin.add_view(ModelView(Project, db.session))

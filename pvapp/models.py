@@ -39,6 +39,7 @@ class Project(db.Model):
   submitted = db.Column(db.DateTime(timezone=True))
   projectname = db.Column(db.String(50))
   description = db.Column(db.String(500))
+  phaseone = db.Column(db.String(100))
   members = db.relationship('Member', backref='project', lazy='dynamic') 
   judges = db.relationship(
     'Judge', 
@@ -52,6 +53,9 @@ class Project(db.Model):
   
   def __repr__(self):
         return '<Project %r>' % (self.projectname)
+
+  def submitphaseone(self, phaseone):
+    self.phaseone = phaseone
 
 class Judge(db.Model):
   id = db.Column(db.Integer, primary_key=True)

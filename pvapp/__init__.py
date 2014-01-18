@@ -20,5 +20,4 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #Initialize App with DB and Email
 from routes import mail
 from models import db
-db.init_app(app)
 mail.init_app(app)

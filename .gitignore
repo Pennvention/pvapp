@@ -4,3 +4,5 @@
 pvapp/settings.py
 #ignore uploads
 uploads/
+#ignore migrations
+migrations/

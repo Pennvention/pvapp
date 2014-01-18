@@ -100,10 +100,10 @@ def phaseone():
   if form.validate_on_submit():
     filename = secure_filename(form.presentation.data.filename)
     form.presentation.data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    print "good" 
+    p = Project.query.get(session['project'])
+    p.submitphaseone(filename) 
     return redirect(url_for('uploads', filename=filename))
   filename = None
-  print filename, "hi"
   return render_template('phaseone.html', form=form, filename=filename) 
 
 @app.route('/uploads/<filename>')

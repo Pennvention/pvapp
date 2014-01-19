@@ -3,38 +3,19 @@
 {% block content %}
   <h2>Add New Member</h2>
  
-  {% for message in form.name.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  {% for message in form.email.errors %}
-    <div class="flash">{{ message }}</div>
+  {% for errors in form.errors.iteritems() %}
+    <div class="alert alert-warning">{{', '.join(errors) }}</div>
   {% endfor %}
 
-  {% for message in form.password.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-
-  {% for message in form.pwdcheck.errors %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-   
-  <form action="{{ url_for('addmember') }}" method=post>
+  <form role="form" action="{{ url_for('addmember') }}" method=post>
     {{ form.hidden_tag() }}
-     
-    {{ form.name.label }}
-    {{ form.name }}
-     
-    {{ form.email.label }}
-    {{ form.email}}
-
-    {{ form.password.label }}
-    {{ form.password }}
-     
-    {{ form.pwdcheck.label }}
-    {{ form.pwdcheck }}
-     
-    {{ form.submit }}
+    {% for subfield in form.newmember %}
+    <div class="form-group"> 
+      {{ subfield.label }}
+      {{ subfield(class_="form-control") }}
+    </div>  
+    {% endfor %} 
+    <button type="submit" class="btn btn-default" id="submit" name="submit" type="submit" value="Send">Add Member</button>
   </form>
      
 {% endblock %}

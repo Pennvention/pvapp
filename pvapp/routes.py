@@ -54,12 +54,13 @@ def register():
     newproject = Project(form.projectname.data, form.description.data)
     db.session.add(newproject)
     db.session.commit()
-    firstuser = Member(form.name.data, form.email.data, form.password.data, newproject.id)
-    db.session.add(firstuser)
+    firstmember = Member(form.firstmember.data['name'], form.firstmember.data['email'], form.firstmember.data['password'], form.firstmember.data['education'], newproject.id)
+    print form.errors
+    db.session.add(firstmember)
     db.session.commit()
     session['project'] = newproject.id
     flash('You successfully created your project. You may now add the rest of your project members.')
-    return redirect(url_for('addmember'))
+    return redirect(url_for('profile'))
   return render_template('register.html', form=form) 
 
 @app.route('/addmember', methods=['GET', 'POST'])
@@ -67,11 +68,11 @@ def register():
 def addmember():
   form = AddMemberForm()
   if form.validate_on_submit():
-    newmember = Member(form.name.data, form.email.data, form.password.data, session['project'])
+    newmember = Member(form.newmember.data['name'], form.newmember.data['email'], form.newmember.data['password'], form.newmember.data['education'], session['project'])
     db.session.add(newmember)
     db.session.commit()
     flash('You have successfully added a member')
-    return redirect(url_for('home'))
+    return redirect(url_for('profile'))
   return render_template('addmember.html', form=form)  
 
 @app.route('/signin', methods=['GET', 'POST'])
@@ -91,8 +92,7 @@ def signin():
 def profile():
   p = Project.query.get(session['project'])
   members = p.members.all()
-  print p.phaseone
-  return render_template('profile.html', phaseone = p.phaseone, pname = p.projectname, desc = p.description, members=members)
+  return render_template('profile.html', p = p, members=members)
 
 @app.route('/phaseone/', methods=('GET', 'POST'))
 @login_required

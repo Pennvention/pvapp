@@ -12,21 +12,49 @@ judges = db.Table(
   db.Column('judge_id', db.Integer, db.ForeignKey('judge.id')),
   db.Column('project_id', db.Integer, db.ForeignKey('project.id'))
 )
+
+Schools = db.Table(
+  'schools',
+  db.Column('member_id', db.Integer, db.ForeignKey('member.id')),
+  db.Column('school_id', db.Integer, db.ForeignKey('school.id'))
+)
+
+class School(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(25))
+  
+  def __init__(self, name):
+    self.name = name
+  def __repr__(self):
+        return '%s' % (self.name)
+
 class Member(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(50))
-  email = db.Column(db.String(120), unique=True)
+  email = db.Column(db.String(120), unique=True)  
   pwdhash = db.Column(db.String(100))
   project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+  year = db.Column(db.Integer)
+  education = db.relationship(
+    'School', 
+    secondary=Schools, 
+    backref=db.backref('students', lazy='dynamic')
+  )
   
-  def __init__(self, name, email, password, project_id):
+  def __init__(self, name, email, password, education, project_id):
     self.name = name
     self.email = email.lower()
     self.project = Project.query.get(project_id)
     self.set_password(password)
-  
+    for school in education:
+      if School.query.filter(School.name == school).first():
+        existingschool = School.query.filter(School.name == school).first()
+        self.education.append(existingschool)
+      newschool = School(school)
+      self.education.append(newschool)
+
   def __repr__(self):
-        return '<Member %r>' % (self.name)
+        return '%s' % (self.name)
  
   def set_password(self, password):
     self.pwdhash = generate_password_hash(password)
@@ -52,7 +80,7 @@ class Project(db.Model):
     self.description = description    
   
   def __repr__(self):
-        return '<Project %r>' % (self.projectname)
+        return 'Project %s' % (self.projectname)
 
   def submitphaseone(self, phaseone):
     self.phaseone = phaseone

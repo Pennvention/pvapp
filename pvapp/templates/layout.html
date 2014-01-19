@@ -3,43 +3,68 @@
   <head>
     <title>Pennvention</title>    
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.0.3/yeti/bootstrap.min.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   </head>
   <body>
    
     <header>
       <div class="container">
-        <h1 class="logo">Pennvention</h1>
-        <strong><nav>
-          <ul class="menu">
-            <li><a href="{{ url_for('home') }}">Home</a></li>
-            <li><a href="{{ url_for('contact') }}">Contact</a></li>
-            {% if 'project' in session %}
- 	    <li><a href="{{ url_for('addmember') }}">Add Member</a></li>
-            <li><a href="{{ url_for('profile') }}">Profile</a></li>
-            <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
-            {% else %}
-	    <li><a href="{{ url_for('register') }}">Register</a></li>
-            <li><a href="{{ url_for('signin') }}">Sign In</a></li>
-            {% endif %}
-          </ul>
-        </nav></strong>
+        <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url_for('home') }}">Pennvention</a>
+          </div><!-- .navbar-header -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              <li><a href="{{ url_for('contact') }}">Contact</a></li>
+              {% if 'project' in session %}
+              <li><a href="{{ url_for('profile') }}">Profile</a></li>
+              <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
+              {% else %}
+	            <li><a href="{{ url_for('register') }}">Register</a></li>
+              <li><a href="{{ url_for('signin') }}">Sign In</a></li>
+              {% endif %}
+              {% if 'project' in session %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+ 	                  <li><a href="{{ url_for('addmember') }}">Add Member</a></li>
+                    <li><a href="{{ url_for('phaseone') }}">Round 1 Submission</a></li>
+                </ul>
+              </li>
+              {% else %}
+              {% endif %}
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </nav>
       </div>
     </header>
-     
-    <div class="container">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <div class=flashes>
-          {% for message in messages %}
-            <div class="flash">{{ message }}</div>
-          {% endfor %}
-          </div>
-        {% endif %}
-      {% endwith %}
-
-      {% block content %}
-      {% endblock %}
-    </div>
+   
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="row">
+        {% for message in messages %}
+          <div class="alert alert-info">{{ message }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {% block content %}
+        {% endblock %}
+      </div><!-- .col-md-6 .col-md-offset-3 -->
+      </div><!-- .row --> 
+    </div><!-- .container -->
      
   </body>
 </html>

@@ -5,10 +5,12 @@
   {% for message in form.presentation.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}
-  <form action="/phaseone/" method="POST" enctype="multipart/form-data">
-    {{ form.presentation.label }}
-    {{ form.presentation }}
-    {{ form.hidden_tag() }}
-    {{ form.submit}}
+  <form role="form" action="/phaseone/" method="POST" enctype="multipart/form-data">
+    <div class="form-group"> 
+      {{ form.presentation.label }}
+      {{ form.presentation(class_="form-control") }}
+    </div>
+      {{ form.hidden_tag() }}
+      <button type="submit" class="btn btn-default" id="submit" name="submit" type="submit" value="Send">Submit</button>
   </form>
 {% endblock %}

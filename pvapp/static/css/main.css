@@ -7,6 +7,6 @@ body {
 }
 
 /* Set display:none for CRSF cookie */
-label[for="newmember-csrf_token"] {
+label[for="newmember-csrf_token"], label[for="firstmember-csrf_token"] {
   display:none;
 }

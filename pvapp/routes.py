@@ -71,7 +71,7 @@ def addmember():
     newmember = Member(form.newmember.data['name'], form.newmember.data['email'], form.newmember.data['password'], form.newmember.data['education'], session['project'])
     db.session.add(newmember)
     db.session.commit()
-    flash('You have successfully added a member')
+    flash('You have successfully added a member!')
     return redirect(url_for('profile'))
   return render_template('addmember.html', form=form)  
 

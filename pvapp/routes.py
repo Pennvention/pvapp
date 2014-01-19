@@ -105,7 +105,8 @@ def phaseone():
     p.submitphaseone(filename) 
     p.updatesubmissiontime()
     db.session.commit()
-    return redirect(url_for('uploads', filename=filename))
+    flash("You have successfully submitted your Round 1 Presentation! Stay tuned for judging results, which should arrive in approximately 2 weeks.")
+    return redirect(url_for('profile'))
   filename = None
   return render_template('phaseone.html', form=form, filename=filename) 
 

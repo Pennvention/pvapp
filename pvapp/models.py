@@ -50,8 +50,9 @@ class Member(db.Model):
       if School.query.filter(School.name == school).first():
         existingschool = School.query.filter(School.name == school).first()
         self.education.append(existingschool)
-      newschool = School(school)
-      self.education.append(newschool)
+      else:  
+        newschool = School(school)
+        self.education.append(newschool)
 
   def __repr__(self):
         return '%s' % (self.name)

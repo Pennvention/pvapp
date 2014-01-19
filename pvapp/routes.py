@@ -22,19 +22,22 @@ def login_required(f):
 
 @app.route('/')
 def home():
-  return render_template('home.html')
+  login = SigninForm() 
+  return render_template('home.html', login=login)
 
 @app.route('/about')
 def about():
-  return render_template('about.html')
+  login = SigninForm() 
+  return render_template('about.html', login)
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
+  login = SigninForm() 
   form = ContactForm()
   if request.method == 'POST':
     if form.validate() == False:
       flash('All fields are required.')
-      return render_template('contact.html', form=form)
+      return render_template('contact.html', form=form, login=login)
     else:
       msg = Message(form.subject.data, sender='contact@example.com', recipients=['nakavthekar@gmail.com'])
       msg.body = """
@@ -43,25 +46,25 @@ def contact():
       """ % (form.name.data, form.email.data, form.message.data)
       mail.send(msg)
 
-      return render_template('contact.html', success=True)
+      return render_template('contact.html', success=True, login=login)
   elif request.method == 'GET':
-    return render_template('contact.html', form=form)
+    return render_template('contact.html', form=form, login=login)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+  login = SigninForm() 
   form = CreateProjectForm()
   if form.validate_on_submit():
     newproject = Project(form.projectname.data, form.description.data)
     db.session.add(newproject)
     db.session.commit()
     firstmember = Member(form.firstmember.data['name'], form.firstmember.data['email'], form.firstmember.data['password'], form.firstmember.data['education'], newproject.id)
-    print form.errors
     db.session.add(firstmember)
     db.session.commit()
     session['project'] = newproject.id
     flash('You successfully created your project. You may now add the rest of your project members.')
     return redirect(url_for('profile'))
-  return render_template('register.html', form=form) 
+  return render_template('register.html', form=form, login=login) 
 
 @app.route('/addmember', methods=['GET', 'POST'])
 @login_required
@@ -75,17 +78,18 @@ def addmember():
     return redirect(url_for('profile'))
   return render_template('addmember.html', form=form)  
 
-@app.route('/signin', methods=['GET', 'POST'])
+@app.route('/signin', methods=['POST'])
 def signin():
-  form = SigninForm()
+  login = SigninForm() 
   if 'project' in session:
     return redirect(url_for('profile')) 
-  if form.validate_on_submit(): 
-    m = Member.query.filter_by(email = form.email.data.lower()).first()
+  if login.validate_on_submit(): 
+    m = Member.query.filter_by(email = login.email.data.lower()).first()
     p = m.project
     session['project'] = p.id 
     return redirect(url_for('profile'))
-  return render_template('signin.html', form=form) 
+  flash('Incorrect login details. Please try again or register for a new account.')
+  return redirect(url_for('home')) 
 
 @app.route('/profile')
 @login_required

@@ -10,3 +10,7 @@ body {
 label[for="newmember-csrf_token"], label[for="firstmember-csrf_token"] {
   display:none;
 }
+
+form.navbar-right, ul.navbar-right.navbar-nav {
+  margin-right: 15px!important;
+}

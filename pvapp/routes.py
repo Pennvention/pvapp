@@ -103,6 +103,7 @@ def phaseone():
     form.presentation.data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
     p = Project.query.get(session['project'])
     p.submitphaseone(filename) 
+    p.updatesubmissiontime()
     db.session.commit()
     return redirect(url_for('uploads', filename=filename))
   filename = None

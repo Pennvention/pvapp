@@ -84,6 +84,8 @@ class Project(db.Model):
 
   def submitphaseone(self, phaseone):
     self.phaseone = phaseone
+  def updatesubmissiontime(self):
+    self.submitted = datetime.now() 
 
 class Judge(db.Model):
   id = db.Column(db.Integer, primary_key=True)

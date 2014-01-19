@@ -3,13 +3,13 @@
 {% block content %}
   <h2>Register Your Team</h2>
   {% if form.projectname.errors %}
-    <div class="alert alert-warning">{{ form.projectname.errors|join(', ') }}</div>
+    <div class="alert alert-danger fade in"><button class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</button>{{ form.projectname.errors|join(', ') }}</div>
   {% endif %}
   {% if form.description.errors %}
-    <div class="alert alert-warning">{{ form.description.errors|join(', ')}}</div>
+    <div class="alert alert-danger fade in"><button class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</button>{{ form.description.errors|join(', ')}}</div>
   {% endif %}
   {% for errors in form.firstmember.errors.itervalues() %}
-    <div class="alert alert-warning">{{errors|join(', ') }}</div>
+    <div class="alert alert-danger fade in"><button class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</button>{{errors|join(', ') }}</div>
   {% endfor %}
   
   <form role="form" action="{{ url_for('register') }}" method=post>

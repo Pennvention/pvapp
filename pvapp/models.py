@@ -7,8 +7,8 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
-judges = db.Table(
-  'judges',
+Judging = db.Table(
+  'judging',
   db.Column('judge_id', db.Integer, db.ForeignKey('judge.id')),
   db.Column('project_id', db.Integer, db.ForeignKey('project.id'))
 )
@@ -27,6 +27,27 @@ class School(db.Model):
     self.name = name
   def __repr__(self):
         return '%s' % (self.name)
+
+class Judge(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(50))
+  reviewing = db.relationship(
+    'Project',
+    secondary=Judging,
+    backref=db.backref('judges', lazy='dynamic')
+  )
+  def __init__(self, name):
+    self.name = name
+  def setjudges(self):
+    projects = Project.query.all()
+    for each in projects:
+      print each.judges.all()
+      if len(each.judges.all()) < 4:
+        self.reviewing.append(each)
+      else:
+        print "no new assignments, no no new"
+  def __repr__(self):
+    return '%s' % (self.name)
 
 class Member(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +71,7 @@ class Member(db.Model):
       if School.query.filter(School.name == school).first():
         existingschool = School.query.filter(School.name == school).first()
         self.education.append(existingschool)
-      else:  
+      else:
         newschool = School(school)
         self.education.append(newschool)
 
@@ -70,11 +91,6 @@ class Project(db.Model):
   description = db.Column(db.String(500))
   phaseone = db.Column(db.String(100))
   members = db.relationship('Member', backref='project', lazy='dynamic') 
-  judges = db.relationship(
-    'Judge', 
-    secondary=judges, 
-    backref=db.backref('projects', lazy='dynamic')
-  )
   def __init__(self, projectname, description):
     self.submitted = datetime.now()
     self.projectname = projectname
@@ -88,6 +104,4 @@ class Project(db.Model):
   def updatesubmissiontime(self):
     self.submitted = datetime.now() 
 
-class Judge(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(50))
+  

@@ -5,7 +5,7 @@ from pvapp import app
 from flask import render_template, request, flash, session, url_for, redirect, send_from_directory
 from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm
 from flask.ext.mail import Message, Mail
-from models import db, Project, Member
+from models import db, Project, Member, Judge
 from functools import wraps
 from werkzeug import secure_filename
 
@@ -14,11 +14,31 @@ mail = Mail()
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if 'project' not in session:
-            flash('Please first create a project.')
+        if ('project' not in session) and ('judge' not in session):
+            flash('Please first login.')
             return redirect(url_for('signin', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
+
+def judge_view(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'judge' not in session:
+            flash('You must be a judge to access this page.')
+            return redirect(url_for('signin', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route('/judges')
+def judge():
+  newjudge = Judge('Nilesh')
+  db.session.add(newjudge)
+  db.session.commit()
+  newjudge.setjudges()
+  db.session.commit()
+  session['judge'] = newjudge.id
+  print newjudge
+  return 'boom' 
 
 @app.route('/')
 def home():

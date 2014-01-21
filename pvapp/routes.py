@@ -3,7 +3,7 @@
 import os
 from pvapp import app
 from flask import render_template, request, flash, session, url_for, redirect, send_from_directory
-from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm
+from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm, AddJudgeForm
 from flask.ext.mail import Message, Mail
 from models import db, Project, Member, Judge
 from functools import wraps
@@ -15,6 +15,18 @@ def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if ('project' not in session) and ('judge' not in session):
+            flash('Please first login.')
+            return redirect(url_for('signin', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def project_view(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'judge' in session:
+          flash('That page is only for competitors. Sorry about that!')
+          return redirect(url_for('profile'))
+        if 'project' not in session:
             flash('Please first login.')
             return redirect(url_for('signin', next=request.url))
         return f(*args, **kwargs)
@@ -50,6 +62,12 @@ def about():
   login = SigninForm() 
   return render_template('about.html', login)
 
+@app.route('/isjudge')
+def isjudge():
+  if 'judge' in session:
+    return "You're a judge!"
+  return "Nope, you're not a judge."
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
   login = SigninForm() 
@@ -65,29 +83,32 @@ def contact():
       %s
       """ % (form.name.data, form.email.data, form.message.data)
       mail.send(msg)
-
       return render_template('contact.html', success=True, login=login)
   elif request.method == 'GET':
     return render_template('contact.html', form=form, login=login)
+
+@app.route('/judgeregister', methods=['GET', 'POST'])
+def judgeregister():
+  login = SigninForm()
+  form = AddJudgeForm()
+  if form.validate_on_submit():
+    session['judge'] = form.getjudge() 
+    flash('You successfully registered as a Judge. Thanks for contributing to entrepreneurship at Penn!')
+    return redirect(url_for('profile'))
+  return render_template('registerjudge.html', form=form, login=login)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
   login = SigninForm() 
   form = CreateProjectForm()
   if form.validate_on_submit():
-    newproject = Project(form.projectname.data, form.description.data)
-    db.session.add(newproject)
-    db.session.commit()
-    firstmember = Member(form.firstmember.data['name'], form.firstmember.data['email'], form.firstmember.data['password'], form.firstmember.data['education'], newproject.id)
-    db.session.add(firstmember)
-    db.session.commit()
-    session['project'] = newproject.id
+    session['project'] = form.getproject() 
     flash('You successfully created your project. You may now add the rest of your project members.')
     return redirect(url_for('profile'))
   return render_template('register.html', form=form, login=login) 
 
 @app.route('/addmember', methods=['GET', 'POST'])
-@login_required
+@project_view
 def addmember():
   form = AddMemberForm()
   if form.validate_on_submit():
@@ -101,12 +122,13 @@ def addmember():
 @app.route('/signin', methods=['POST'])
 def signin():
   login = SigninForm() 
-  if 'project' in session:
+  if ('project' in session) or ('judge' in session):
     return redirect(url_for('profile')) 
-  if login.validate_on_submit(): 
-    m = Member.query.filter_by(email = login.email.data.lower()).first()
-    p = m.project
-    session['project'] = p.id 
+  if login.validate_on_submit(): # means that user is either judge or project member 
+    if login.findmember():
+      session['project'] = login.getproject() # sets to id of project 
+    elif login.findjudge():
+      session['judge'] = login.findjudge() # sets to id of judge
     return redirect(url_for('profile'))
   flash('Incorrect login details. Please try again or register for a new account.')
   return redirect(url_for('home')) 
@@ -114,12 +136,16 @@ def signin():
 @app.route('/profile')
 @login_required
 def profile():
-  p = Project.query.get(session['project'])
-  members = p.members.all()
-  return render_template('profile.html', p = p, members=members)
+  if 'project' in session:
+    p = Project.query.get(session['project'])
+    members = p.members.all()
+    return render_template('profile.html', p = p, members=members)
+  else:
+    j = Judge.query.get(session['judge'])
+    return render_template('judgeprofile.html', j=j)
 
 @app.route('/phaseone/', methods=('GET', 'POST'))
-@login_required
+@project_view
 def phaseone():
   form = PhaseOneForm()
   if form.validate_on_submit():
@@ -143,6 +169,7 @@ def uploads(filename):
 @login_required
 def signout():
   session.pop('project', None)
+  session.pop('judge', None)
   return redirect(url_for('home'))
 
 if __name__ == '__main__':

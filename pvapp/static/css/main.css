@@ -14,3 +14,9 @@ label[for="newmember-csrf_token"], label[for="firstmember-csrf_token"] {
 form.navbar-right, ul.navbar-right.navbar-nav {
   margin-right: 15px!important;
 }
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 970px;
+    }
+}

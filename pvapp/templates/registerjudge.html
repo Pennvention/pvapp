@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+ 
+{% block content %}
+  <h2>Register as a Judge</h2>
+  {% for errors in form.newjudge.errors.itervalues() %}
+    <div class="alert alert-danger fade in"><button class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</button>{{errors|join(', ') }}</div>
+  {% endfor %}
+  
+  <form role="form" action="{{ url_for('judgeregister') }}" method=post>
+    {{ form.hidden_tag() }}
+    {% for subfield in form.newjudge %}
+    <div class="form-group"> 
+      {{ subfield.label }}
+      {{ subfield(class_="form-control") }}
+    </div>  
+    {% endfor %} 
+     
+    <button type="submit" class="btn btn-default" id="submit" name="submit" type="submit" value="Send">Register</button>
+  </form>
+{% endblock %}

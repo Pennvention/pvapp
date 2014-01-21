@@ -6,3 +6,5 @@ pvapp/settings.py
 uploads/
 #ignore migrations
 migrations/
+#ignore .swp so vim can be used simultaneously
+*.swp

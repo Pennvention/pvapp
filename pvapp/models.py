@@ -26,18 +26,29 @@ class School(db.Model):
   def __init__(self, name):
     self.name = name
   def __repr__(self):
-        return '%s' % (self.name)
+    return '%s' % (self.name)
 
 class Judge(db.Model):
   id = db.Column(db.Integer, primary_key=True)
+  specialcode = db.Column(db.String(50))
   name = db.Column(db.String(50))
+  email = db.Column(db.String(120), unique=True)  
+  pwdhash = db.Column(db.String(100))
   reviewing = db.relationship(
     'Project',
     secondary=Judging,
     backref=db.backref('judges', lazy='dynamic')
   )
-  def __init__(self, name):
+  def __repr__(self):
+    return '%s' % (self.name)
+  def set_password(self, password):
+    self.pwdhash = generate_password_hash(password)
+  def check_password(self, password):
+    return check_password_hash(self.pwdhash, password)
+  def setup(self, name, email, password):
     self.name = name
+    self.email = email
+    self.set_password(password)
   def setjudges(self):
     projects = Project.query.all()
     for each in projects:
@@ -103,5 +114,3 @@ class Project(db.Model):
     self.phaseone = phaseone
   def updatesubmissiontime(self):
     self.submitted = datetime.now() 
-
-  

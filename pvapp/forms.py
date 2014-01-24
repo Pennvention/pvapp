@@ -67,7 +67,7 @@ class AddMemberForm(Form):
   submit = SubmitField("Send") 
 
 class PhaseOneForm(Form):
-  presentation = FileField('Presentation in PDF Format', validators=[FileRequired(), FileAllowed(['jpg', 'png'], 'Images only!')])
+  presentation = FileField('Presentation in PDF Format', validators=[FileRequired(), FileAllowed(['pdf'], 'Please upload in PDF format.')])
   submit = SubmitField("Send")
 
 class CreateProjectForm(Form):

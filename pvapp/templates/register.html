@@ -24,7 +24,10 @@
     </div>   
     {% for subfield in form.firstmember %}
     <div class="form-group"> 
-      {{ subfield.label }}
+      {{ subfield.label }} 
+      {% if subfield.description %}
+        ({{ subfield.description }})
+      {% endif %}
       {{ subfield(class_="form-control") }}
     </div>  
     {% endfor %} 

@@ -64,8 +64,10 @@ class Member(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(50))
   email = db.Column(db.String(120), unique=True)  
+  phone = db.Column(db.String(20))
   pwdhash = db.Column(db.String(100))
   project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+  level = db.Column(db.String(20))
   year = db.Column(db.Integer)
   education = db.relationship(
     'School', 
@@ -73,11 +75,12 @@ class Member(db.Model):
     backref=db.backref('students', lazy='dynamic')
   )
   
-  def __init__(self, name, email, password, education, project_id):
+  def __init__(self, name, email, phone, password, education, level, year, project_id):
     self.name = name
     self.email = email.lower()
     self.project = Project.query.get(project_id)
     self.set_password(password)
+    self.level = level
     for school in education:
       if School.query.filter(School.name == school).first():
         existingschool = School.query.filter(School.name == school).first()

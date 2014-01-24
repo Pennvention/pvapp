@@ -1,8 +1,8 @@
 from flask.ext.wtf import Form
 from flask.ext.wtf.html5 import EmailField
 from flask.ext.wtf.file import FileField, FileRequired, FileAllowed
-from wtforms import validators, ValidationError, TextField, TextAreaField, SubmitField, PasswordField, SelectMultipleField, FormField
-from models import Member, db, Judge
+from wtforms import validators, ValidationError, TextField, TextAreaField, SubmitField, PasswordField, SelectMultipleField, FormField, SelectField
+from models import Member, db, Judge, Project
 
 class NewJudge(Form):
   specialcode = TextField("Special Code", [validators.Required("Please enter the special code we sent you in an email.")])
@@ -37,7 +37,10 @@ class AddJudgeForm(Form):
 class NewMember(Form):
   name = TextField("Name", [validators.Required("Please enter your name.")])
   email = EmailField("Email", [validators.Required("Please enter your email address."), validators.Email("Please enter a valid email address.")])
-  education = SelectMultipleField('School', choices=[('SEAS Undergrad', 'SEAS Undergrad Student'), ('SEAS Grad', 'SEAS Grad Student'), ('Wharton Undergrad', 'Wharton Undergrad Student'), ('Wharton Grad', 'Wharton MBA Student'), ('SAS Undergrad', 'SAS Student'), ('Nursing', 'Nursing Student')]) 
+  phone = TextField('Phone Number', [validators.Required("Please enter your phone number.")], description="XXX-XXX-XXXX")
+  education = SelectMultipleField('School', description='Select all applicable.', choices=[('SEAS', 'SEAS Student'), ('Wharton', 'Wharton Student'), ('SAS', 'SAS Student'), ('Nursing', 'Nursing Student')]) 
+  level = SelectField('Level of Study', choices=[('Undergraduate', 'Undergraduate'), ('Graduate', 'Graduate'), ('Doctoral', 'Doctoral')])
+  year = SelectField('Year', choices=[('2014', '2014'), ('2015', '2015'), ('2016', '2016'), ('2017', '2017'), ('2018', '2018')])
   password = PasswordField('Password', [validators.Required("Please enter a password.")])
   pwdcheck = PasswordField('Re-type Password', [validators.Required("Please re-type your password.")])
   
@@ -54,12 +57,6 @@ class NewMember(Form):
       self.email.errors.append("That email is already taken")
       return False
     else:
-      newproject = Project(form.projectname.data, form.description.data)
-      db.session.add(newproject)
-      db.session.commit()
-      firstmember = Member(self.firstmember.data['name'], self.firstmember.data['email'], self.firstmember.data['password'], self.firstmember.data['education'], newproject.id)
-      db.session.add(firstmember)
-      db.session.commit()
       return True
 
 class AddMemberForm(Form):
@@ -76,8 +73,18 @@ class CreateProjectForm(Form):
   firstmember = FormField(NewMember)
   submit = SubmitField("Send")
   def getproject(self):
-    return Project.query.filter_by(projectname = self.projectname).first().id
-
+    project = Project.query.filter_by(projectname = self.projectname.data).first()
+    return project.id
+  def validate(self):
+    if not Form.validate(self):
+      return False
+    newproject = Project(self.projectname.data, self.description.data)
+    db.session.add(newproject)
+    db.session.commit()
+    firstmember = Member(self.firstmember.data['name'], self.firstmember.data['email'], self.firstmember.data['phone'], self.firstmember.data['password'], self.firstmember.data['education'], self.firstmember.data['level'], self.firstmember.data['year'], newproject.id)
+    db.session.add(firstmember)
+    db.session.commit()
+    return True
 
 class ContactForm(Form):
   name = TextField("Name",  [validators.Required("Please enter your name.")])

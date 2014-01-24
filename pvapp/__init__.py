@@ -27,9 +27,10 @@ db.init_app(app)
 from admin import MyHomeView
 from flask.ext.admin import Admin 
 from flask.ext.admin.contrib.sqla import ModelView
-from models import Member, Project, School, Judge
+from models import Member, Project, School, Judge, Score
 admin = Admin(app, index_view=MyHomeView(), name="Pennvention Admin")
 admin.add_view(ModelView(Member, db.session))
 admin.add_view(ModelView(Project, db.session))
 admin.add_view(ModelView(School, db.session))
 admin.add_view(ModelView(Judge, db.session))
+admin.add_view(ModelView(Score, db.session))

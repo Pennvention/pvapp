@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from __future__ import division
 import os
 from pvapp import app
 from flask import render_template, request, flash, session, url_for, redirect, send_from_directory
@@ -139,6 +140,8 @@ def profile():
   if 'project' in session:
     p = Project.query.get(session['project'])
     members = p.members.all()
+    scores = [s.weighted for s in p.scores.all()] 
+    print sum(scores)/len(scores)
     return render_template('profile.html', p = p, members=members)
   else:
     j = Judge.query.get(session['judge'])

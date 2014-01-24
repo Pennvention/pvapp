@@ -34,6 +34,7 @@ class Judge(db.Model):
   name = db.Column(db.String(50))
   email = db.Column(db.String(120), unique=True)  
   pwdhash = db.Column(db.String(100))
+  scores = db.relationship('Score', backref='judge', lazy='dynamic')
   reviewing = db.relationship(
     'Project',
     secondary=Judging,
@@ -98,6 +99,18 @@ class Member(db.Model):
   def check_password(self, password):
     return check_password_hash(self.pwdhash, password)
 
+class Score(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  judge_id = db.Column(db.Integer, db.ForeignKey('judge.id'))
+  project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+  weighted = db.Column(db.Float) 
+  def setup(self, judgeid, projectid, score):
+    self.judge_id = judgeid
+    self.project_id = projectid
+    self.weighted = score
+  def __repr__(self):
+    return 'Score of %d for %s by %s' % (self.weighted, self.project, self.judge) 
+
 class Project(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   submitted = db.Column(db.DateTime(timezone=True))
@@ -105,6 +118,7 @@ class Project(db.Model):
   description = db.Column(db.String(500))
   phaseone = db.Column(db.String(100))
   members = db.relationship('Member', backref='project', lazy='dynamic') 
+  scores = db.relationship('Score', backref='project', lazy='dynamic')
   def __init__(self, projectname, description):
     self.submitted = datetime.now()
     self.projectname = projectname

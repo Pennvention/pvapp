@@ -7,12 +7,12 @@
            <h1>Bring your own idea.</h1>
            <p> $20,000 in prizes. Incredible mentors. Engineering resources to develop your product. </p>
            <p> Bring a solid idea and team, and we'll help you with the rest.</p>
-           <p><a href="http://pv.tech-house.upenn.edu" class="btn btn-danger btn-lg">REGISTER NOW</a>&nbsp; &nbsp;<a href="#aboutpv" class="btn btn-danger btn-lg">HOW IT WORKS</a></p>
+           <p><a href="http://pv.tech-house.upenn.edu" class="btn btn-danger btn-lg">REGISTER NOW</a>&nbsp; &nbsp;<a href="#about" class="btn btn-danger btn-lg">HOW IT WORKS</a></p>
         </div>
       </div>
   </section> 
   
-  <section id="aboutpv" data-type="background" style="background-image:url('{{url_for('static', filename="sky.jpg")}}')" data-speed="10">
+  <section id="about" data-type="background" style="background-image:url('{{url_for('static', filename="sky.jpg")}}')" data-speed="10">
     <div class="container">
       <div class="frontpagewrapper">
         <h1 class="frontpageheader"> How it Works </h1>
@@ -25,8 +25,8 @@
     </div>
   </section> 
 
-  <section id="pastwinners" data-type="background" data-speed="10">
-   <div class="container">
+  <section id="pastwinners" data-type="background" style="background-image:url('{{url_for('static', filename="penngineering.jpg")}}')" data-speed="10">
+   <div class="container past">
     <div class="frontpagewrapper">
       <h1 class="frontpageheader"> Past Finalists</h1>
       <h4 class="frontpagedesc"> These teams developed incredible products. You can too.</h4>
@@ -34,12 +34,12 @@
   {% if pastwinners %}
     <div class="row">
   {% for pastwinner in pastwinners %}
-      <div class="mentor col-md-3 col-sm-6">
-        <div class="mentorpic-container">
-          <img class="mentorpic" src='{{url_for('static', filename=pastwinner.photo)}}'> </img>
+      <div class="mentor col-md-4 col-sm-6">
+        <div class="pastwinnerpic-container">
+          <img class="pastwinnerpic" src='{{url_for('static', filename=pastwinner.photo)}}'> </img>
         </div>
-          <h3 class="mentorname"> {{pastwinner.projectname}} </b></h3>
-          <p class="mentorbio"> {{pastwinner.info}}</p>
+        <h3 class="mentorname"> {{pastwinner.projectname}} </b></h3>
+        <p class="mentorbio"> {{pastwinner.info}}</p>
       </div>
   {% endfor %}
     </div>

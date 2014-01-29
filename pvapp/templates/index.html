@@ -1,0 +1,35 @@
+{% extends "layoutbase.html" %}
+{% block template %}
+  
+  
+  <section id="aboutbg" data-type="background" style="background-image:url('{{url_for('static', filename="sky.jpg")}}')" data-speed="10">
+    <div class="container" id="about">
+      <h1 class="frontpageheader"> How it Works </h1>
+      <p> The sky really is the limit. </p>
+    </div>
+    <div class="container">
+      <div id="process" style="background-image:url('{{url_for('static', filename="pv_process.png")}}')" > 
+      </div>	
+    </div>
+  </section> 
+
+  <section id="mentors" data-type="background" data-speed="10">
+   <div class="container mentorship">
+     <h1 class="frontpageheader"> Past Mentors </h1>
+     <p> These distinguished mentors have worked to help teams develop their products.
+  {% if mentors %}
+     <div class="row">
+  {% for mentor in mentors %}
+       <div class="mentor col-md-4 col-sm-6">
+          <div class="mentorpic-container">
+           <img class="mentorpic" src='{{url_for('static', filename=mentor.photo)}}'> </img>
+          </div>
+         <h3 class="mentorname"> {{mentor.name}} </b></h3>
+         <p class="mentorbio"> Management Professor, Wharton</p>
+       </div>
+  {% endfor %}
+     </div>
+  {% endif %}
+   </div>
+  </section> 
+{% endblock %}

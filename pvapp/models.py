@@ -19,6 +19,26 @@ Schools = db.Table(
   db.Column('school_id', db.Integer, db.ForeignKey('school.id'))
 )
 
+class PastWinner(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  projectname = db.Column(db.String(100))
+  info = db.Column(db.String(1000))
+  photo = db.Column(db.String(50))
+
+class MentorPhoto(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(100))
+  position = db.Column(db.String(100))
+  organization = db.Column(db.String(100))
+  bio = db.Column(db.String(1000))
+  photo = db.Column(db.String(50))
+  
+class SponsorPhoto(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(25))
+  prize = db.Column(db.String(500))
+  photo = db.Column(db.String(50))
+
 class School(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(25))

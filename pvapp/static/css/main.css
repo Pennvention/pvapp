@@ -20,3 +20,47 @@ form.navbar-right, ul.navbar-right.navbar-nav {
         max-width: 970px;
     }
 }
+
+.mentorship, img.mentorpic {
+  width:100%;
+}
+
+.mentorpic-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+img.mentorpic {
+  position: absolute;
+  height:100%;
+}
+
+.mentorname, .mentorbio {
+  text-align: center;
+}
+
+#aboutbg {
+  background: no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100px;
+  height: 750px;
+  padding-top: 0px;
+  pposition:relative;
+}
+
+#process {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  height: 0;
+  padding-top:5%;
+  padding-bottom:40%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}

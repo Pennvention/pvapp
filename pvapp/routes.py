@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+# from __future__ imports must be done at top
 from __future__ import division
 import os
 from pvapp import app
 from flask import render_template, request, flash, session, url_for, redirect, send_from_directory
 from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm, AddJudgeForm
 from flask.ext.mail import Message, Mail
-from models import db, Project, Member, Judge
+from models import db, Project, Member, Judge, MentorPhoto
 from functools import wraps
 from werkzeug import secure_filename
 
@@ -57,6 +58,12 @@ def judge():
 def home():
   login = SigninForm() 
   return render_template('home.html', login=login)
+
+@app.route('/home')
+def homepage():
+  static = app.config['UPLOAD_FOLDER']
+  mentors = MentorPhoto.query.all()
+  return render_template('index.html', static=static, mentors=mentors)
 
 @app.route('/about')
 def about():
@@ -141,7 +148,8 @@ def profile():
     p = Project.query.get(session['project'])
     members = p.members.all()
     scores = [s.weighted for s in p.scores.all()] 
-    print sum(scores)/len(scores)
+    if len(scores):
+      print sum(scores)/len(scores)
     return render_template('profile.html', p = p, members=members)
   else:
     j = Judge.query.get(session['judge'])
@@ -164,7 +172,6 @@ def phaseone():
   return render_template('phaseone.html', form=form, filename=filename) 
 
 @app.route('/static/<filename>')
-@login_required
 def uploads(filename):
     return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename)
 

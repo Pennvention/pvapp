@@ -48,7 +48,7 @@ img.pastwinnerpic {
   text-align: center;
 }
 
-#home, #mentors {
+#home, #about, #pastfinalists, #mentors {
   padding-top:60px;
   margin-top: -60px;
 }
@@ -60,7 +60,7 @@ img.pastwinnerpic {
   -o-background-size: cover;
   background-size: cover;
   background-position: 0px -75px;
-  height: 800px;
+  height: 1000px;
   padding-top: 50px;
   margin-top:-10px;
 }
@@ -88,7 +88,7 @@ img.pastwinnerpic {
   position:relative;
 }
 
-#pastwinners {
+#pastfinalists {
   background: no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;

@@ -8,8 +8,18 @@
     <!-- JS: JQuery and Bootstrap -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/1.4.9/jquery.scrollTo.min.js"></script>
+    <!-- <script>
+    $(function() {
+        $('#bs-navbar').bind('click', 'ul li a', function(event) {
+            event.preventDefault();
+            $.scrollTo(event.target.hash, 250);
+        });
+    });
+    </script> -->
   </head>
-  <body>
+  <body data-spy="scroll" data-target="#bs-navbar">
    
     <header>
       <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
@@ -23,14 +33,18 @@
               </button>
               <a class="navbar-brand" href="{{ url_for('home') }}"><i>PENNVENTION</i></a>
             </div><!-- .navbar-header -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-navbar">
               <ul class="nav navbar-nav">
-                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                {% if home %}
+                <li><a href="#about">About</a></li>
+                <li><a href="#pastfinalists">Past Finalists</a></li>
+                <li><a href="#mentors">Mentors</a></li>
+                {% endif %} 
                 {% if 'project' in session %}
                 {% else %}
                 <li><a href="{{ url_for('register') }}">Register</a></li>
                 {% endif %}
-                {% if 'project' in session %}
+                {% if ('project' in session) and not home %}
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
                   <ul class="dropdown-menu">

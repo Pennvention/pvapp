@@ -45,15 +45,15 @@ def judge_view(f):
 
 @app.route('/')
 def home():
-  login = SigninForm() 
-  return render_template('home.html', login=login)
-
-@app.route('/home')
-def homepage():
   static = app.config['UPLOAD_FOLDER']
   mentors = MentorPhoto.query.all()
   pastwinners = PastWinner.query.all()
-  return render_template('index.html', pastwinners=pastwinners, mentors=mentors)
+  return render_template('index.html', pastwinners=pastwinners, mentors=mentors, home="yes")
+
+@app.route('/home')
+def homepage():
+  login = SigninForm() 
+  return render_template('home.html', login=login)
 
 @app.route('/about')
 def about():

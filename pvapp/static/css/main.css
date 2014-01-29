@@ -40,16 +40,44 @@ img.mentorpic {
   text-align: center;
 }
 
-#aboutbg {
+#home, #aboutpv, #mentors {
+  padding-top:60px;
+  margin-top: -60px;
+}
+
+#home {
+  background: no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-position: 0px -75px;
+  height: 800px;
+  padding-top: 50px;
+  margin-top:-10px;
+}
+
+.jumbotron {
+  margin-top: -50px;
+  background: rgba(255, 255, 255, 0.6);
+  text-align:center;
+}
+
+.frontpagedesc, .frontpageheader {
+  text-align: center;
+}
+
+.frontpagewrapper {
+  margin-bottom:50px;
+}
+#aboutpv {
   background: no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-height: 100px;
   height: 750px;
-  padding-top: 0px;
-  pposition:relative;
+  position:relative;
 }
 
 #process {

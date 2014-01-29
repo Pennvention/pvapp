@@ -40,8 +40,8 @@
                 <li><a href="#pastfinalists">Past Finalists</a></li>
                 <li><a href="#mentors">Mentors</a></li>
                 {% endif %} 
-                {% if 'project' in session %}
-                {% else %}
+                {% if home %}
+                {% elif 'project' not in session %}
                 <li><a href="{{ url_for('register') }}">Register</a></li>
                 {% endif %}
                 {% if ('project' in session) and not home %}

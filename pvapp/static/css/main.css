@@ -51,19 +51,28 @@ img.pastwinnerpic {
 #home, #about, #pastfinalists, #mentors {
   padding-top:60px;
   margin-top: -60px;
-}
-
-#home {
   background: no-repeat center center fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+#home, #about, #pastfinalists {
+  height:1000px;
+}
+
+#home {
   background-position: 0px -75px;
-  height: 1000px;
   padding-top: 50px;
   margin-top:-10px;
 }
+#about {
+  position:relative;
+}
+
+#pastfinalists {
+  position:relative;
+} 
 
 .jumbotron {
   margin-top: -50px;
@@ -78,25 +87,6 @@ img.pastwinnerpic {
 .frontpagewrapper {
   margin-bottom:50px;
 }
-#about {
-  background: no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 750px;
-  position:relative;
-}
-
-#pastfinalists {
-  background: no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  height: 750px;
-  position:relative;
-} 
 
 .past {
   color: white;

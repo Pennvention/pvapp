@@ -76,7 +76,7 @@ img.pastwinnerpic {
 
 .jumbotron {
   margin-top: -50px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.9);
   text-align:center;
 }
 
@@ -104,4 +104,21 @@ img.pastwinnerpic {
   background-repeat: no-repeat;
   background-position: center center;
   background-size: contain;
+}
+
+#twitter-widget-0 {
+  margin-top: 12px;
+}
+
+.navbar-brand {
+  font-weight: 900;
+  font-size:24px;
+}
+
+#pv-title {
+  color: #18bc9c;
+}
+
+#pv-title-white, #pv-title-white:hover {
+  color: white;
 }

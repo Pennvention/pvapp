@@ -18,6 +18,15 @@
         });
     });
     </script>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=573812696015465";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   </head>
   <body data-spy="scroll" data-target="#bs-navbar">
    
@@ -31,7 +40,7 @@
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="{{ url_for('home') }}"><i>PENNVENTION</i></a>
+              <a class="navbar-brand" href="{{ url_for('home') }}"><i><span id="pv-title">PENN</span><span id="pv-title-white">VENTION</span></i></a>
             </div><!-- .navbar-header -->
             <div class="collapse navbar-collapse" id="bs-navbar">
               <ul class="nav navbar-nav">
@@ -61,8 +70,11 @@
                 <li><a href="{{ url_for('signout') }}">Sign Out</a></li>
               </ul>
               {% else %}
-              {% if login %}
                 <form class="navbar-form navbar-right" action="{{ url_for('signin') }}" method=post>
+                <div class="fb-like" data-href="https://facebook.com/pennvention" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div>
+                &nbsp;
+                <a href="https://twitter.com/pennvention" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="regular">Follow @Pennvention</a>
+              {% if login %}
                   {{ login.hidden_tag() }}
                   <div class="form-group">             
                     {{ login.email.label(class_="sr-only") }}
@@ -73,8 +85,8 @@
                     {{ login.password(class_="form-control", placeholder="Password") }}
                   </div>      
                   <button type="submit" class="btn btn-default" id="submit" name="submit" type="submit" value="Send">Login</button>
-                </form>
               {% endif %}
+                </form>
               {% endif %}
             </div><!-- /.navbar-collapse -->
           </div>

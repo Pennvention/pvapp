@@ -172,3 +172,8 @@ def signout():
   session.pop('judge', None)
   return redirect(url_for('home'))
 
+<<<<<<< HEAD
+=======
+if __name__ == '__main__':
+  	app.run(host='0.0.0.0')
+>>>>>>> 4ff288696395d0d2b71108f913492782d61ffb84

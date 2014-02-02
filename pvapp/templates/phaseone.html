@@ -2,6 +2,15 @@
  
 {% block content %}
   <h2>Round 1 Submission</h2>
+  <p>The submission for Round 1 is a slide deck spanning at most 5 slides (excluding the title slide) that outlines your technical idea. A good presentation will contain the following:
+<ul>
+  <li> Information about the team, their project roles, and any mentors/advisors to the project
+  <li> Explanation of the problematic issue, and any relevant statistics about market size (if a commercial idea), individuals affected (if a civic/non-profit innovation), or any metrics you think are appropriate
+  <li> Technical Explanation of idea and footnotes/references if applicable 
+  <li> Timeline for next 6 months outlining the next steps to produce a Minimal Viable Product, and relevant costs
+<ul>
+</p>
+
   {% for message in form.presentation.errors %}
     <div class="flash">{{ message }}</div>
   {% endfor %}

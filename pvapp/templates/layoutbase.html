@@ -62,13 +62,6 @@
                 {% else %}
                 {% endif %}
               </ul>
-                {% if home %}
-                {% elif 'project' not in session %}
-              <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-              </ul>
-                {% endif %}
               {% if ('project' in session) or ('judge' in session) %}
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url_for('profile') }}">Profile</a></li>

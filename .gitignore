@@ -8,3 +8,5 @@ uploads/
 migrations/
 #ignore .swp so vim can be used simultaneously
 *.swp
+#ignore virtualenv
+venv/

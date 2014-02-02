@@ -51,10 +51,6 @@
                 {% endif %} 
               </ul>
               <ul class="nav navbar-nav">
-                {% if home %}
-                {% elif 'project' not in session %}
-                <li><a href="{{ url_for('register') }}">Register</a></li>
-                {% endif %}
                 {% if ('project' in session) and not home %}
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<b class="caret"></b></a>
@@ -66,6 +62,13 @@
                 {% else %}
                 {% endif %}
               </ul>
+                {% if home %}
+                {% elif 'project' not in session %}
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+              </ul>
+                {% endif %}
               {% if ('project' in session) or ('judge' in session) %}
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url_for('profile') }}">Profile</a></li>
@@ -73,9 +76,11 @@
               </ul>
               {% else %}
                 <form class="navbar-form navbar-right" action="{{ url_for('signin') }}" method=post>
+                {% if home %}          
                 <div class="fb-like" data-href="https://facebook.com/pennvention" data-layout="button" data-action="like" data-show-faces="true" data-share="false"></div>
                 &nbsp;
                 <a href="https://twitter.com/pennvention" class="twitter-follow-button" data-show-count="false" data-lang="en" data-size="regular">Follow @Pennvention</a>
+                {% endif %}
               {% if login %}
                   {{ login.hidden_tag() }}
                   <div class="form-group">             

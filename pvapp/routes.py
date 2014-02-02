@@ -58,7 +58,13 @@ def homepage():
 @app.route('/about')
 def about():
   login = SigninForm() 
-  return render_template('about.html', login)
+  return render_template('about.html', login=login)
+
+@app.route('/login')
+def login():
+  loginform = SigninForm()
+  return render_template('login.html', loginform=loginform)
+
 
 @app.route('/isjudge')
 def isjudge():
@@ -129,7 +135,7 @@ def signin():
       session['judge'] = login.findjudge() # sets to id of judge
     return redirect(url_for('profile'))
   flash('Incorrect login details. Please try again or register for a new account.')
-  return redirect(url_for('home')) 
+  return redirect(url_for('login')) 
 
 @app.route('/profile')
 @login_required

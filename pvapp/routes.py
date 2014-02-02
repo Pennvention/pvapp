@@ -107,7 +107,7 @@ def register():
   form = CreateProjectForm()
   if form.validate_on_submit():
     session['project'] = form.getproject() 
-    flash('Congratulations! You successfully created your project. You can add the rest of your project members from "Actions" -> "Add New Nember".')
+    flash('Congratulations! You successfully created your project. You can add the rest of your project members from "Actions" -> "Add Member".')
     return redirect(url_for('profile'))
   return render_template('register.html', form=form, login=login) 
 

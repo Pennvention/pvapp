@@ -3,6 +3,7 @@ from flask.ext.wtf.html5 import EmailField
 from flask.ext.wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import validators, ValidationError, TextField, TextAreaField, SubmitField, PasswordField, SelectMultipleField, FormField, SelectField
 from models import Member, db, Judge, Project
+from settings import ADMIN_EMAIL, ADMIN_PASS
 
 class NewJudge(Form):
   specialcode = TextField("Special Code", [validators.Required("Please enter the special code we sent you in an email.")])
@@ -104,7 +105,12 @@ class SigninForm(Form):
     if member and member.check_password(self.password.data):
       return member 
     return None 
-
+  
+  # returns admin email
+  def findadmin(self):
+    if (self.email.data.lower() == ADMIN_EMAIL) and (self.password.data == ADMIN_PASS):
+      return self.email.data.lower()
+    return None
   
   # returns project id if member is found
   def getproject(self):
@@ -127,6 +133,8 @@ class SigninForm(Form):
     if self.findmember(): 
       return True
     elif self.findjudge():
+      return True
+    elif self.findadmin():
       return True
     else:
       self.email.errors.append("Invalid e-mail or password")

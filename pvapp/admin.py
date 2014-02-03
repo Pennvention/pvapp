@@ -3,7 +3,7 @@ from flask.ext.admin import AdminIndexView, expose
 
 class MyHomeView(AdminIndexView):
     def is_accessible(self):
-        if session['project'] or session['judge']:
+        if session['admin']:
             return True
         else: 
             return False

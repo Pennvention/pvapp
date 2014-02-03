@@ -16,7 +16,7 @@ mail = Mail()
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if ('project' not in session) and ('judge' not in session):
+        if not (('admin' in session) or ('project' in session) or ('judge' in session)):
             flash('Please first login.')
             return redirect(url_for('signin', next=request.url))
         return f(*args, **kwargs)
@@ -133,6 +133,8 @@ def signin():
       session['project'] = login.getproject() # sets to id of project 
     elif login.findjudge():
       session['judge'] = login.findjudge() # sets to id of judge
+    elif login.findadmin():
+      session['admin'] = login.findadmin()
     return redirect(url_for('profile'))
   flash('Incorrect login details. Please try again or register for a new account.')
   return redirect(url_for('login')) 
@@ -147,9 +149,11 @@ def profile():
     if len(scores):
       print sum(scores)/len(scores)
     return render_template('profile.html', p = p, members=members)
-  else:
+  elif 'judge' in session:
     j = Judge.query.get(session['judge'])
     return render_template('judgeprofile.html', j=j)
+  elif 'admin' in session:
+    return redirect(url_for('home'))
 
 @app.route('/phaseone/', methods=('GET', 'POST'))
 @project_view

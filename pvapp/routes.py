@@ -175,6 +175,7 @@ def uploads(filename):
 def signout():
   session.pop('project', None)
   session.pop('judge', None)
+  session.pop('admin', None)
   return redirect(url_for('home'))
 
 if __name__ == '__main__':

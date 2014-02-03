@@ -1,5 +1,5 @@
 from flask import Flask
-from settings import SECRET_KEY, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, SQLALCHEMY, UPLOAD_FOLDER
+from settings import SECRET_KEY, MAIL_SERVER, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, SQLALCHEMY, UPLOAD_FOLDER, STATIC_FOLDER
  
 app = Flask(__name__)
 app.secret_key = SECRET_KEY 
@@ -16,6 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY
 
 #File Upload Settings
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['STATIC_FOLDER'] = STATIC_FOLDER
 
 #Initialize App with DB and Email
 from routes import mail

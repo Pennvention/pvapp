@@ -10,3 +10,5 @@ migrations/
 *.swp
 #ignore virtualenv
 venv/
+#ignore uploads folder
+pvapp/static/submissions/

@@ -111,9 +111,6 @@ def register():
 def addmember():
   form = AddMemberForm()
   if form.validate_on_submit():
-    newmember = Member(form.newmember.data['name'], form.newmember.data['email'], form.newmember.data['password'], form.newmember.data['education'], session['project'])
-    db.session.add(newmember)
-    db.session.commit()
     flash('You have successfully added a member!')
     return redirect(url_for('profile'))
   return render_template('addmember.html', form=form)  
@@ -166,9 +163,9 @@ def phaseone():
   filename = None
   return render_template('phaseone.html', form=form, filename=filename) 
 
-@app.route('/static/<filename>')
-def uploads(filename):
-    return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename)
+@app.route('/submission/<filename>') 
+def submission(filename): 
+  return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename)
 
 @app.route('/signout')
 @login_required

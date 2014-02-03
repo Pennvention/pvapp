@@ -96,11 +96,9 @@ class Member(db.Model):
     backref=db.backref('students', lazy='dynamic')
   )
   
-  def __init__(self, name, email, phone, password, education, level, year, project_id):
+  def __init__(self, name, email, password, education, level, project_id):
     self.name = name
-    self.email = email.lower()
-    self.phone = phone
-    self.year = year
+    self.email = email
     self.project = Project.query.get(project_id)
     self.set_password(password)
     self.level = level

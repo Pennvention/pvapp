@@ -2,6 +2,7 @@ from flask.ext.wtf import Form
 from flask.ext.wtf.html5 import EmailField
 from flask.ext.wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import validators, ValidationError, TextField, TextAreaField, SubmitField, PasswordField, SelectMultipleField, FormField, SelectField
+from flask import session
 from models import Member, db, Judge, Project
 from settings import ADMIN_EMAIL, ADMIN_PASS
 
@@ -63,6 +64,13 @@ class NewMember(Form):
 class AddMemberForm(Form):
   newmember = FormField(NewMember) 
   submit = SubmitField("Send") 
+  def validate(self):
+    if not Form.validate(self):
+      return False
+    newperson = Member(self.newmember.data['name'], self.newmember.data['email'], self.newmember.data['phone'], self.newmember.data['password'], self.newmember.data['education'], self.newmember.data['level'], self.newmember.data['year'], session['project'])
+    db.session.add(newperson)
+    db.session.commit()
+    return True
 
 class PhaseOneForm(Form):
   presentation = FileField('Presentation in PDF Format', validators=[FileRequired(), FileAllowed(['pdf'], 'Please upload in PDF format.')])

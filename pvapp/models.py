@@ -99,6 +99,8 @@ class Member(db.Model):
   def __init__(self, name, email, phone, password, education, level, year, project_id):
     self.name = name
     self.email = email.lower()
+    self.phone = phone
+    self.year = year
     self.project = Project.query.get(project_id)
     self.set_password(password)
     self.level = level

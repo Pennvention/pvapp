@@ -65,13 +65,6 @@ def login():
   loginform = SigninForm()
   return render_template('login.html', loginform=loginform)
 
-
-@app.route('/isjudge')
-def isjudge():
-  if 'judge' in session:
-    return "You're a judge!"
-  return "Nope, you're not a judge."
-
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
   login = SigninForm() 
@@ -103,6 +96,8 @@ def judgeregister():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+  if ('judge' in session) or ('admin' in session) or ('project' in session):
+    redirect(url_for('profile')) 
   login = SigninForm() 
   form = CreateProjectForm()
   if form.validate_on_submit():
@@ -153,7 +148,7 @@ def profile():
     j = Judge.query.get(session['judge'])
     return render_template('judgeprofile.html', j=j)
   elif 'admin' in session:
-    return redirect(url_for('home'))
+    return redirect('/admin')
 
 @app.route('/phaseone/', methods=('GET', 'POST'))
 @project_view

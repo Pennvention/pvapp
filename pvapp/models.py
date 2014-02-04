@@ -25,6 +25,17 @@ class PastWinner(db.Model):
   info = db.Column(db.String(1000))
   photo = db.Column(db.String(50))
 
+class FrequentlyAsked(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  question = db.Column(db.String(1000))
+  answer = db.Column(db.String(1000))
+
+class Sponsors(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(100))
+  prize = db.Column(db.String(200))
+  photo = db.Column(db.String(50))
+
 class MentorPhoto(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String(100))

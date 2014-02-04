@@ -57,8 +57,18 @@ img.pastwinnerpic {
   -o-background-size: cover;
   background-size: cover;
 }
-#home, #about, #pastfinalists {
+
+#frequentlyasked {
+  padding-top:60px;
+  margin-top: -60px;
+}
+
+#home, #pastfinalists {
   height:1000px;
+}
+
+#about {
+  height: 1750px;
 }
 
 #home {

@@ -23,6 +23,16 @@
       <div id="process" style="background-image:url('{{url_for('static', filename="img/pv_process.png")}}')" > 
       </div>	
     </div>
+    <div class="container" id="frequentlyasked">
+      <div class="frontpagewrapper">
+        <h1 class="frontpageheader"> Frequently Asked Questions</h1>
+      </div>
+      {% for faq in faqs %}
+        <h4><b> {{ faq.question }} </b></h4>
+        <h4> {{ faq.answer }} </h4>
+        <hr>
+      {% endfor %}
+    </div>
   </section> 
 
   <section id="pastfinalists" data-type="background" style="background-image:url('{{url_for('static', filename="img/penngineering.jpg")}}')" data-speed="10">

@@ -42,14 +42,16 @@
               </button>
               <a class="navbar-brand" href="{{ url_for('home') }}"><i><span id="pv-title">PENN</span><span id="pv-title-white">VENTION</span></i></a>
             </div><!-- .navbar-header -->
-            <div class="collapse navbar-collapse" >
-              <ul id="bs-navbar" class="nav navbar-nav">
-                {% if home %}
-                <li><a href="#about">About</a></li>
-                <li><a href="#pastfinalists">Past Finalists</a></li>
-                <li><a href="#mentors">Mentors</a></li>
-                {% endif %} 
-              </ul>
+            <div  class="collapse navbar-collapse" >
+	      <div id="bs-navbar">
+                <ul class="nav navbar-nav">
+                  {% if home %}
+                  <li><a href="#about">About</a></li>
+                  <li><a href="#pastfinalists">Past Finalists</a></li>
+                  <li><a href="#mentors">Mentors</a></li>
+                  {% endif %} 
+                </ul>
+	      </div>
               <ul class="nav navbar-nav">
                 {% if ('project' in session) and not home %}
                 <li class="dropdown">

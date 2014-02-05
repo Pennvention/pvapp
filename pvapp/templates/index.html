@@ -76,6 +76,22 @@
   </div><!-- .container mentorship -->
 </section> 
 
-  <section id="sponsors" data-type="background" data-speed="10">
-  </section> 
+<section id="sponsors" data-type="background" data-speed="10">
+  <div class="container">
+    <div class="frontpagewrapper">
+      <h1 class="frontpageheader"> Sponsors </h1>
+      <h4 class="frontpagedesc"> Over $20,000 in cash and development prizes, courtesy of our incredible sponsors.</h4>
+    </div><!-- .frontpage wrapper #mentors -->
+    <div class="row">
+      {% for sponsor in sponsors %}
+        <div class="sponsor col-md-3 col-sm-6">
+          <div class="sponsorpic-container">
+            <img class="sponsorpic" src='{{url_for('static', filename=sponsor.photo)}}'> </img>
+            <p class="mentorbio"> {{sponsor.prize}} </p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div><!-- .container -->
+</section> 
 {% endblock %}

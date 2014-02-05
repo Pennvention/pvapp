@@ -21,7 +21,7 @@ form.navbar-right, ul.navbar-right.navbar-nav {
     }
 }
 
-.mentorship, img.mentorpic {
+img.sponsorpic, .mentorship, img.mentorpic {
   width:100%;
 }
 
@@ -30,6 +30,11 @@ form.navbar-right, ul.navbar-right.navbar-nav {
   width: 100%;
   padding-bottom: 100%;
 }
+
+.sponsorpic-container {
+  height: 100px;
+}
+
 
 img.mentorpic {
   position: absolute;
@@ -58,7 +63,7 @@ img.pastwinnerpic {
   background-size: cover;
 }
 
-#frequentlyasked {
+#sponsors, #frequentlyasked {
   padding-top:60px;
   margin-top: -60px;
 }
@@ -104,11 +109,11 @@ img.pastwinnerpic {
 }
 
 .howitworks {
-  padding-bottom: 150px;
+  margin-bottom: 150px;
 }
 
 .past {
-  padding-bottom: 150px;
+  margin-bottom: 150px;
 }
 
 #process {

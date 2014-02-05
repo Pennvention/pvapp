@@ -67,7 +67,7 @@ img.pastwinnerpic {
   height:1000px;
 }
 
-#about {
+#about, #pastfinalists {
   height: 1750px;
 }
 
@@ -98,9 +98,17 @@ img.pastwinnerpic {
   margin-bottom:50px;
 }
 
-.past {
+.past, .mentorship {
   color: white;
   background-color: rgba(0,0,0,0.7);
+}
+
+.howitworks {
+  padding-bottom: 150px;
+}
+
+.past {
+  padding-bottom: 150px;
 }
 
 #process {

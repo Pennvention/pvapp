@@ -7,7 +7,7 @@ from pvapp import app
 from flask import render_template, request, flash, session, url_for, redirect, send_from_directory
 from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm, AddJudgeForm
 from flask.ext.mail import Message, Mail
-from models import db, Project, Member, Judge, MentorPhoto, PastWinner, FrequentlyAsked 
+from models import db, Project, Member, Judge, MentorPhoto, PastWinner, FrequentlyAsked, Sponsors
 from functools import wraps
 from werkzeug import secure_filename
 
@@ -49,7 +49,8 @@ def home():
   mentors = MentorPhoto.query.all()
   pastwinners = PastWinner.query.all()
   faqs = FrequentlyAsked.query.all()
-  return render_template('index.html', faqs=faqs, pastwinners=pastwinners, mentors=mentors, home="yes")
+  sponsors = Sponsors.query.all()
+  return render_template('index.html', faqs=faqs, pastwinners=pastwinners, mentors=mentors, sponsors=sponsors, home="yes")
 
 @app.route('/about')
 def about():

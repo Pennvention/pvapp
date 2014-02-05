@@ -19,7 +19,7 @@
         <h4 class="frontpagedesc"> Build the next big thing in tech. The sky really is the limit. </h4>
       </div>
     </div>
-    <div class="container">
+    <div class="container howitworks">
       <div id="process" style="background-image:url('{{url_for('static', filename="img/pv_process.png")}}')" > 
       </div>	
     </div>
@@ -35,47 +35,47 @@
     </div>
   </section> 
 
-  <section id="pastfinalists" data-type="background" style="background-image:url('{{url_for('static', filename="img/penngineering.jpg")}}')" data-speed="10">
-   <div class="container past">
+<section id="pastfinalists" data-type="background" style="background-image:url('{{url_for('static', filename="img/penngineering.jpg")}}')" data-speed="10">
+  <div class="container past">
     <div class="frontpagewrapper">
       <h1 class="frontpageheader"> Past Finalists</h1>
       <h4 class="frontpagedesc"> These teams developed incredible products. You can too.</h4>
-    </div>
-  {% if pastwinners %}
+    </div><!-- .container .past -->
+ {% if pastwinners %}
     <div class="row">
-  {% for pastwinner in pastwinners %}
+ {% for pastwinner in pastwinners %}
       <div class="mentor col-md-4 col-sm-6">
         <div class="pastwinnerpic-container">
           <img class="pastwinnerpic" src='{{url_for('static', filename=pastwinner.photo)}}'> </img>
-        </div>
+        </div><!-- .pastwinnerpic-container-->
         <h3 class="mentorname"> {{pastwinner.projectname}} </b></h3>
         <p class="mentorbio"> {{pastwinner.info}}</p>
-      </div>
-  {% endfor %}
-    </div>
-  {% endif %}
+      </div><!-- .mentor .col-md-4 .col-sm-6 -->
+ {% endfor %}
+    </div><!-- .row -->
+ {% endif %}
   </div>
-  </section> 
-
-  <section id="mentors" data-type="background" data-speed="10">
-   <div class="container mentorship">
-    <div class="frontpagewrapper">
+  <div class="container mentorship">
+    <div class="frontpagewrapper" id="mentors">
       <h1 class="frontpageheader"> Past Mentors </h1>
       <h4 class="frontpagedesc"> These distinguished mentors have worked to help teams develop their products.</h4>
-    </div>
-  {% if mentors %}
-     <div class="row">
-  {% for mentor in mentors %}
-       <div class="mentor col-md-3 col-sm-6">
-          <div class="mentorpic-container">
-           <img class="mentorpic" src='{{url_for('static', filename=mentor.photo)}}'> </img>
-          </div>
-         <h3 class="mentorname"> {{mentor.name}} </b></h3>
-         <p class="mentorbio"> {{mentor.position}}, {{mentor.organization}} </p>
-       </div>
-  {% endfor %}
-     </div>
-  {% endif %}
-   </div>
+    </div><!-- .frontpage wrapper #mentors -->
+ {% if mentors %}
+    <div class="row">
+ {% for mentor in mentors %}
+      <div class="mentor col-md-3 col-sm-6">
+        <div class="mentorpic-container">
+          <img class="mentorpic" src='{{url_for('static', filename=mentor.photo)}}'> </img>
+        </div>
+        <h3 class="mentorname"> {{mentor.name}} </b></h3>
+        <p class="mentorbio"> {{mentor.position}}, {{mentor.organization}} </p>
+      </div>
+ {% endfor %}
+    </div><!-- .row -->
+ {% endif %}
+  </div><!-- .container mentorship -->
+</section> 
+
+  <section id="sponsors" data-type="background" data-speed="10">
   </section> 
 {% endblock %}

@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 # from __future__ imports must be done at top
 from __future__ import division
-import os
+import os, sys
 from pvapp import app
 from flask import render_template, request, flash, session, url_for, redirect, send_from_directory
-from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm, AddJudgeForm
+from forms import ContactForm, SigninForm, CreateProjectForm, AddMemberForm, PhaseOneForm, AddJudgeForm, AddScoreForm
 from flask.ext.mail import Message, Mail
 from models import db, Project, Member, Judge, MentorPhoto, PastWinner, FrequentlyAsked, Sponsors
 from functools import wraps
@@ -103,6 +103,15 @@ def register():
     return redirect(url_for('profile'))
   return render_template('register.html', form=form, login=login) 
 
+@app.route('/judge/<int:project_id>', methods=['GET', 'POST'])
+@judge_view
+def judge_project(project_id):
+  form = AddScoreForm()
+  if form.validate_on_submit():
+    flash('You have successfully submitted a score!')
+    return redirect(url_for('profile'))
+  return render_template('judge.html', form=form, project_id=project_id)
+
 @app.route('/addmember', methods=['GET', 'POST'])
 @project_view
 def addmember():
@@ -142,7 +151,8 @@ def profile():
     j = Judge.query.get(session['judge'])
     return render_template('judgeprofile.html', j=j)
   elif 'admin' in session:
-    return redirect('/admin')
+    projects = Project.query.all();
+    return render_template('adminprofile.html', projects=projects)
 
 @app.route('/phaseone/', methods=('GET', 'POST'))
 @project_view

@@ -6,7 +6,7 @@
     <ul>
       {% for p in j.reviewing %}
         {% if p.phaseone %}
-          <li><a href="{{ url_for('uploads', filename=p.phaseone)}}">{{ p.projectname}}: Round 1 Submission</a></li>
+          <li><a href="{{ url_for('judge_project', project_id=p.id)}}">{{ p.projectname}}: Round 1 Submission</a></li>
         {% endif %}
       {% endfor %}
     </ul> 

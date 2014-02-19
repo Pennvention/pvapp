@@ -137,7 +137,7 @@ class Score(db.Model):
   judge_id = db.Column(db.Integer, db.ForeignKey('judge.id'))
   project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
   weighted = db.Column(db.Float) 
-  def setup(self, judgeid, projectid, score):
+  def __init__(self, judgeid, projectid, score):
     self.judge_id = judgeid
     self.project_id = projectid
     self.weighted = score

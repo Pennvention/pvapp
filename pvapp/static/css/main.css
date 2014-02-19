@@ -72,8 +72,12 @@ img.pastwinnerpic {
   height:1000px;
 }
 
-#about, #pastfinalists {
+#pastfinalists {
   height: 1750px;
+}
+
+#about {
+  height: 2100px;
 }
 
 #home {

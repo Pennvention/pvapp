@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="jumbo">
+    <h2> Welcome to the Admin Panel.</h2>
+    {% if projects %}
+    <ul>
+      {% for p in projects %}
+        {% if p.phaseone %}
+          <li><a href="{{ url_for('submission', filename=p.phaseone)}}">{{ p.projectname}}: Round 1 Submission</a></li>
+	{% else %}
+	  <li>{{ p.projectname }} (has not submitted) </li>
+        {% endif %}
+      {% endfor %}
+    </ul> 
+    {% endif %}
+  </div>
+{% endblock %}

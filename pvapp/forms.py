@@ -36,6 +36,17 @@ class AddJudgeForm(Form):
   def getjudge(self):
     return Judge.query.filter_by(name = self.newjudge.data['name']).first().id
 
+scorechoices = [(1, '1 (Least Innovative)'), (2, '2'), (3, '3'), (4, '4'),
+		(5, '5'), (6, '6'), (7, '7'), (8, '8'), (9, '9'),
+		(10, '10 (Most Innovative)')]
+					
+class NewScore(Form):
+  score = SelectField('Score', choices=scorechoices, validators=[validators.Required("Please enter a score for this submission")]) 
+
+class AddScoreForm(Form):
+  newscore = FormField(NewScore)
+  submit = SubmitField("Send")
+
 class NewMember(Form):
   name = TextField("Name", [validators.Required("Please enter your name.")])
   email = EmailField("Email", [validators.Required("Please enter your email address."), validators.Email("Please enter a valid email address.")])

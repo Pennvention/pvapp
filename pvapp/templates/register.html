@@ -20,6 +20,9 @@
     </div>   
     <div class="form-group"> 
       {{ form.description.label }}
+      {% if form.description.description %}
+        ({{ form.description.description }})
+      {% endif %}
       {{ form.description(class_="form-control") }}
     </div>   
     {% for subfield in form.firstmember %}

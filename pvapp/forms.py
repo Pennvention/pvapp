@@ -41,7 +41,7 @@ scorechoices = [(1, '1 (Least Innovative)'), (2, '2'), (3, '3'), (4, '4'),
 		(10, '10 (Most Innovative)')]
 					
 class NewScore(Form):
-  score = SelectField('Score', choices=scorechoices, validators=[validators.Required("Please enter a score for this submission")]) 
+  score = SelectField('Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter a score for this submission")]) 
 
 class AddScoreForm(Form):
   newscore = FormField(NewScore)
@@ -89,7 +89,7 @@ class PhaseOneForm(Form):
 
 class CreateProjectForm(Form):
   projectname = TextField("Project Name", [validators.Required("Please enter a name for your project.")])
-  description = TextAreaField("Short Project Description", [validators.Required("Please enter a description for your project.")]) 
+  description = TextAreaField("Short Project Description", [validators.Required("Please enter a description for your project.")], description="Limit 500 characters") 
   firstmember = FormField(NewMember)
   submit = SubmitField("Send")
   def getproject(self):

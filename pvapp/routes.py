@@ -110,6 +110,8 @@ def judge_project(project_id):
   if form.validate_on_submit():
     flash('You have successfully submitted a score!')
     return redirect(url_for('profile'))
+  if Project.query.get(project_id) not in Judge.query.get(session['judge']).reviewing:
+    return "You cannot see this project"
   return render_template('judge.html', form=form, project_id=project_id)
 
 @app.route('/addmember', methods=['GET', 'POST'])

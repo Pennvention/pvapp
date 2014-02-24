@@ -41,8 +41,11 @@ scorechoices = [(1, '1 (Least Innovative)'), (2, '2'), (3, '3'), (4, '4'),
 		(10, '10 (Most Innovative)')]
 					
 class NewScore(Form):
-  score = SelectField('Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter a score for this submission")]) 
-
+  researchscore = SelectField('Research Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter a Research Score for this submission")]) 
+  innovationscore = SelectField('Innovation Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter an Innovation Score for this submission")]) 
+  planscore = SelectField('Implementation Plan Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter an Implementation Plan Score for this submission")]) 
+  
+  
 class AddScoreForm(Form):
   newscore = FormField(NewScore)
   submit = SubmitField("Send")

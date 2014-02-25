@@ -1,16 +1,20 @@
 {% extends "layout.html" %}
  
 {% block content %}
-  <h2>Judge a project</h2>
+  <h2>{{ p.projectname }} - First Round Judging Form</h2>
   {% for errors in form.newscore.errors.itervalues() %}
     <div class="alert alert-danger fade in"><button class="close" data-dismiss="alert" href="#" aria-hidden="true">&times;</button>{{errors|join(', ') }}</div>
-  {% endfor %}
-  
+  {% endfor %}  
+  <p><b>Description of Project</b>: {{p.description}} </p>
+  <p>View {{ p.projectname }}'s <a href="{{ url_for('submission', filename=p.phaseone) }}">First Round slide deck</a>.</p>
   <form role="form" action="{{ url_for('judge_project', project_id=project_id) }}" method=post>
     {{ form.hidden_tag() }}
     {% for subfield in form.newscore %}
     <div class="form-group"> 
       {{ subfield.label }}
+      {% if subfield.description %}
+        ({{ subfield.description }})
+      {% endif %}
       {{ subfield(class_="form-control") }}
     </div>  
     {% endfor %} 

@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+from __future__ import division
+import random
 from werkzeug import generate_password_hash, check_password_hash
 from flask.ext.sqlalchemy import SQLAlchemy
 from datetime import datetime
@@ -83,14 +84,16 @@ class Judge(db.Model):
     self.set_password(password)
   def setjudges(self):
     projects = Project.query.all()
+    random.shuffle(projects)
     for each in projects:
-      print each.judges.all()
-      if len(each.judges.all()) < 4:
+      if (len(each.judges.all()) < 4) and (len(self.reviewing) < 4):
         self.reviewing.append(each)
       else:
         print "no new assignments, no no new"
   def __repr__(self):
     return '%s' % (self.name)
+  def __init__(self, specialcode):
+    self.specialcode = specialcode 
 
 class Member(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -136,11 +139,19 @@ class Score(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   judge_id = db.Column(db.Integer, db.ForeignKey('judge.id'))
   project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
-  weighted = db.Column(db.Float) 
-  def __init__(self, judgeid, projectid, score):
+  research = db.Column(db.Float) 
+  innovation = db.Column(db.Float) 
+  plan = db.Column(db.Float) 
+  comment = db.Column(db.String(2000))
+  weighted = db.Column(db.Float)
+  def __init__(self, judgeid, projectid, researchscore, innovationscore, planscore, comment=""):
     self.judge_id = judgeid
     self.project_id = projectid
-    self.weighted = score
+    self.research = researchscore
+    self.innovation = innovationscore
+    self.plan = planscore
+    self.weighted = (researchscore + innovationscore + planscore)/3.0
+    self.comment = comment
   def __repr__(self):
     return 'Score of %d for %s by %s' % (self.weighted, self.project, self.judge) 
 

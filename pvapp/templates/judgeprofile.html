@@ -2,11 +2,12 @@
 {% block content %}
   <div class="jumbo">
     <h2> Welcome, {{ j.name }}.</h2>
+    New to judging? Read the <a href="{{ url_for('static', filename="Judging_PV.pdf") }}">judging rubic worksheet</a> to help guide you through the process. 
     {% if j.reviewing %}
     <ul>
       {% for p in j.reviewing %}
         {% if p.phaseone %}
-          <li><a href="{{ url_for('judge_project', project_id=p.id)}}">{{ p.projectname}}: Round 1 Submission</a></li>
+          <li>{{ p.projectname }} <a href="{{ url_for('judge_project', project_id=p.id)}}">Judge Project</a></li>
         {% endif %}
       {% endfor %}
     </ul> 

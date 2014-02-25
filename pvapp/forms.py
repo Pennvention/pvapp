@@ -36,14 +36,15 @@ class AddJudgeForm(Form):
   def getjudge(self):
     return Judge.query.filter_by(name = self.newjudge.data['name']).first().id
 
-scorechoices = [(1, '1 (Least Innovative)'), (2, '2'), (3, '3'), (4, '4'),
+scorechoices = [(1, '1 (Lowest Score)'), (2, '2'), (3, '3'), (4, '4'),
 		(5, '5'), (6, '6'), (7, '7'), (8, '8'), (9, '9'),
-		(10, '10 (Most Innovative)')]
+		(10, '10 (Highest Score)')]
 					
 class NewScore(Form):
   researchscore = SelectField('Research Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter a Research Score for this submission")]) 
   innovationscore = SelectField('Innovation Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter an Innovation Score for this submission")]) 
   planscore = SelectField('Implementation Plan Score', coerce=int, choices=scorechoices, validators=[validators.Required("Please enter an Implementation Plan Score for this submission")]) 
+  comment = TextAreaField("Comment (optional)", description="Limit 2000 Characters")
   
   
 class AddScoreForm(Form):
